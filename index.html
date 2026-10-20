@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservas Turísticas | Parque Nacional Cotopaxi</title>
+<meta name="description" content="Reserva tu visita al Parque Nacional Cotopaxi: caminatas, ciclismo, cabalgatas y fotografía con guías locales.">
+<style>
+:root{--verde:#174c3c;--verde2:#2f7959;--crema:#f5f5ef;--dorado:#d6b46a;--texto:#29352f;--gris:#69736c;--borde:#dce3dc;--rojo:#dc3545}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:Montserrat,"Segoe UI",Arial,sans-serif;background:var(--crema);color:var(--texto);line-height:1.6}
+h1,h2,h3,h4,h5{margin:0 0 .5rem;line-height:1.2}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+.contenedor{width:min(1140px,100% - 32px);margin-inline:auto}
+.centro{text-align:center}
+.suave{color:var(--gris)}
+.pequeno{font-size:.85rem}
+.verde{color:var(--verde2)}
+.seccion{margin:64px auto}
+
+/* NAVEGACIÓN */
+.nav{background:var(--verde);position:sticky;top:0;z-index:50;box-shadow:0 4px 14px #0003}
+.nav .contenedor{display:flex;align-items:center;justify-content:space-between;padding:14px 0;flex-wrap:wrap}
+.marca{color:#fff;font-weight:800;letter-spacing:1px;font-size:1.2rem}
+.marca span{color:var(--dorado)}
+.menu{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+.menu a{color:#ffffffd9;transition:.3s}
+.menu a:hover{color:var(--dorado)}
+.insignia{background:var(--dorado);color:#1d3027;border-radius:20px;padding:1px 8px;font-size:.75rem;font-weight:700}
+.hamburguesa{display:none;background:none;border:1px solid #fff8;color:#fff;font-size:1.4rem;border-radius:8px;padding:2px 10px;cursor:pointer}
+
+/* PORTADA */
+.portada{position:relative;color:#fff;text-align:center;padding:110px 20px;background:linear-gradient(#0a231b7a,#0a231bb8),url('https://www.goecuadortravel.com/archivos/destinos/cotopaxi-1200x600-1_Mediano.jpg') center/cover}
+.portada h1{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:900;text-transform:uppercase;text-shadow:2px 3px 8px #0007}
+.portada h1 span{color:var(--dorado)}
+.portada p{font-size:1.2rem;max-width:680px;margin:0 auto 28px}
+.etiqueta{display:inline-block;background:var(--dorado);color:#1d3027;font-weight:700;border-radius:30px;padding:5px 16px;margin-bottom:18px}
+
+/* BOTONES */
+.btn{display:inline-block;border:2px solid transparent;border-radius:30px;padding:11px 28px;font:inherit;font-weight:700;cursor:pointer;transition:.3s}
+.btn:hover{transform:translateY(-2px)}
+.btn-dorado{background:var(--dorado);color:#1d3027;border-color:var(--dorado);font-size:1.1rem;padding:13px 38px}
+.btn-dorado:hover{background:transparent;color:#fff}
+.btn-verde{background:var(--verde);color:#fff;border-color:var(--verde)}
+.btn-verde:hover{background:var(--verde2);border-color:var(--verde2)}
+.btn-borde{background:#fff;color:var(--verde);border-color:var(--verde2)}
+.btn-borde:hover{background:#edf3ed}
+.btn-rojo{background:#fff;color:var(--rojo);border:1px solid var(--rojo);border-radius:8px;padding:4px 12px;font-size:.85rem}
+.btn-rojo:hover{background:var(--rojo);color:#fff}
+
+/* TARJETAS */
+.rejilla{display:grid;gap:22px}
+.r4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.r3{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.tarjeta{background:#fff;border-radius:18px;padding:26px 22px;box-shadow:0 5px 22px #173b2c14;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.tarjeta:hover{transform:translateY(-5px);box-shadow:0 12px 30px #173b2c26}
+.icono{font-size:2.2rem;line-height:1}
+.tarjeta h5{color:var(--verde)}
+.tarjeta p{color:#727b74;font-size:.95rem}
+.sobre{color:var(--verde2);font-size:.85rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin:0 0 6px}
+.titulo{color:var(--verde);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800}
+.cabecera{margin-bottom:32px}
+.tour-cab{display:flex;gap:14px;align-items:center;margin-bottom:12px}
+.tour-ico{background:var(--verde);border-radius:14px;width:58px;height:58px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.7rem}
+.chip{display:inline-block;font-size:.72rem;font-weight:700;border-radius:20px;padding:2px 10px;background:#eee;margin-right:4px}
+.chip.facil{background:#d6ecd9;color:#1e6b34}
+.chip.moderado{background:#fff1c9;color:#7a5a00}
+.chip.exigente{background:#f8d7da;color:#842029}
+.tour-pie{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.precio{font-size:1.5rem;font-weight:800;color:var(--verde2)}
+.precio small{font-size:.8rem;font-weight:400;color:var(--gris)}
+
+/* FORMULARIO */
+.disposicion{display:grid;grid-template-columns:2fr 1fr;gap:26px;align-items:start}
+.formulario{background:#fff;border-radius:24px;padding:clamp(20px,4vw,42px);box-shadow:0 15px 50px #173b2c1f;border:1px solid #e8ebe5}
+.bloque{margin-bottom:34px}
+.bloque h4{display:flex;align-items:center;gap:12px;color:var(--verde);font-size:1.15rem;font-weight:800;border-bottom:1px solid #e7ebe5;padding-bottom:12px;margin-bottom:20px}
+.num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--verde);color:#fff;border-radius:10px;font-size:.9rem;flex-shrink:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.completo{grid-column:1/-1}
+.campo{display:flex;flex-direction:column}
+label{font-weight:650;color:#394a40;margin-bottom:7px}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--borde);border-radius:11px;background:#fbfcfa}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--verde2);box-shadow:0 0 0 .2rem #2f79592e;background:#fff}
+.error{display:none;color:var(--rojo);font-size:.85rem;margin-top:4px}
+.validada :invalid{border-color:var(--rojo)}
+.validada .campo :invalid ~ .error,.validada #acepto:invalid ~ .error{display:block}
+.extra{display:flex;gap:12px;align-items:flex-start;border:1px solid #e4e9e3;border-radius:11px;background:#fbfcfa;padding:13px 15px;cursor:pointer;margin:0;font-weight:400;transition:.2s}
+.extra:hover{border-color:var(--verde2);background:#f1f7f1}
+.extra input{margin-top:5px;accent-color:var(--verde2);width:17px;height:17px}
+.extra b{display:block;font-weight:650}
+.eco{background:#edf5ed;border-left:5px solid var(--verde2);border-radius:12px;padding:18px 20px;margin-bottom:22px;color:#56665b}
+.eco strong{color:var(--verde)}
+.acepto{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin-bottom:24px}
+.acepto input{margin-top:6px;accent-color:var(--verde2);width:17px;height:17px}
+.acepto label{margin:0;font-weight:400}
+.acepto .error{grid-column:2}
+.botones{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+
+/* RESUMEN */
+.resumen{background:#fff;border-radius:18px;box-shadow:0 10px 36px #173b2c1f;overflow:hidden;position:sticky;top:90px}
+.resumen header{background:var(--verde);color:#fff;font-weight:700;padding:14px 18px}
+.resumen ul{list-style:none;margin:0;padding:0}
+.resumen li{display:flex;justify-content:space-between;gap:10px;padding:12px 18px;border-bottom:1px solid #eef1ec}
+.resumen li small{display:block;color:var(--gris)}
+.total{display:flex;justify-content:space-between;padding:16px 18px;font-size:1.25rem;font-weight:800;background:#f7f9f5}
+.total span:last-child{color:var(--verde2)}
+
+/* PREGUNTAS FRECUENTES */
+.faq{max-width:780px;margin:auto;background:#fff;border-radius:14px;box-shadow:0 5px 22px #173b2c14;overflow:hidden}
+.faq details{border-bottom:1px solid #eef1ec}
+.faq summary{cursor:pointer;padding:18px 22px;font-weight:700;color:var(--verde);list-style:none;display:flex;justify-content:space-between}
+.faq summary::after{content:"＋";color:var(--verde2)}
+.faq details[open] summary::after{content:"－"}
+.faq details p{padding:0 22px 18px;margin:0;color:#56665b}
+
+/* TABLA */
+.tabla-caja{background:#fff;border-radius:16px;box-shadow:0 5px 22px #173b2c14;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{background:#d9ebdd;color:var(--verde);text-align:left;padding:12px 14px}
+td{padding:12px 14px;border-top:1px solid #eef1ec}
+tbody tr:hover{background:#f6faf6}
+.cod{font-weight:800;color:var(--verde2)}
+.der{text-align:right}
+
+/* PIE */
+footer{background:#12392e;color:#fff;text-align:center;padding:36px 0;margin-top:70px}
+footer p{color:#d1ddd5;margin:4px 0}
+
+/* VENTANA MODAL Y AVISO */
+dialog{border:0;border-radius:16px;padding:0;width:min(480px,92vw);box-shadow:0 20px 60px #0006}
+dialog::backdrop{background:#000a}
+.modal-cab{background:var(--verde);color:#fff;padding:16px 20px;font-weight:700;font-size:1.1rem}
+.modal-cuerpo{padding:20px}
+.modal-cuerpo ul{list-style:none;padding:0;margin:0}
+.modal-cuerpo li{margin-bottom:6px}
+.modal-pie{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid #eee}
+.codigo{font-size:2.2rem;font-weight:800;color:var(--verde2);text-align:center}
+#aviso{position:fixed;right:18px;bottom:18px;background:#212529;color:#fff;padding:14px 20px;border-radius:10px;opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s;z-index:100}
+#aviso.mostrar{opacity:1;transform:none}
+
+/* ADAPTABLE A CELULARES */
+@media (max-width:900px){
+  .disposicion{grid-template-columns:1fr}
+  .resumen{position:static}
+}
+@media (max-width:760px){
+  .hamburguesa{display:block}
+  .menu{display:none;flex-direction:column;gap:12px;width:100%;padding:14px 0 4px}
+  .menu.abierto{display:flex}
+  .cols{grid-template-columns:1fr}
+  .portada{padding:80px 16px}
+  .botones .btn{width:100%}
+}
+@media print{.nav,.portada,#aviso,footer{display:none}}
+</style>
+</head>
+<body>
+
+<!-- NAVEGACIÓN -->
+<nav class="nav">
+  <div class="contenedor">
+    <a class="marca" href="#inicio"><span>⛰</span> COTOPAXI TOUR</a>
+    <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <ul class="menu" id="menu">
+      <li><a href="#tours">Experiencias</a></li>
+      <li><a href="#reservar">Reservar</a></li>
+      <li><a href="#consejos">Consejos</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+      <li><a href="#misreservas">Mis reservas <span id="contador" class="insignia">0</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PORTADA -->
+<header id="inicio" class="portada">
+  <span class="etiqueta">🧭 Ecuador · Ama la Vida</span>
+  <h1>Reserva tu aventura en el <span>Cotopaxi</span></h1>
+  <p>A 5.897 m de altura, uno de los volcanes activos más altos del mundo te espera. Elige tu experiencia, fecha y servicios en menos de dos minutos.</p>
+  <a href="#reservar" class="btn btn-dorado">Reservar ahora ⬇</a>
+</header>
+
+<!-- DATOS RÁPIDOS -->
+<section class="contenedor seccion centro">
+  <div class="rejilla r4">
+    <div class="tarjeta"><div class="icono">📍</div><h5>Ubicación</h5><p>Provincias de Cotopaxi, Pichincha y Napo</p></div>
+    <div class="tarjeta"><div class="icono">📈</div><h5>Altitud</h5><p>5.897 m s. n. m.</p></div>
+    <div class="tarjeta"><div class="icono">🕒</div><h5>Mejor horario</h5><p>Mañanas: cielo más despejado</p></div>
+    <div class="tarjeta"><div class="icono">🛡</div><h5>Seguridad</h5><p>Guías locales y rutas autorizadas</p></div>
+  </div>
+</section>
+
+<!-- EXPERIENCIAS -->
+<section id="tours" class="contenedor seccion">
+  <div class="centro cabecera">
+    <p class="sobre">Nuestras experiencias</p>
+    <h2 class="titulo">Elige cómo quieres vivir el Cotopaxi</h2>
+    <p class="suave">Cada experiencia incluye guía local, seguro de actividad y botiquín de primeros auxilios.</p>
+  </div>
+  <div class="rejilla r3" id="listaTours"></div>
+</section>
+
+<!-- FORMULARIO DE RESERVA -->
+<section id="reservar" class="contenedor seccion">
+  <div class="centro cabecera">
+    <p class="sobre">Reservación en línea</p>
+    <h2 class="titulo">Completa tu reserva</h2>
+    <p class="suave">El total se calcula automáticamente mientras llenas el formulario.</p>
+  </div>
+
+  <div class="disposicion">
+    <form id="formReserva" class="formulario" novalidate>
+
+      <div class="bloque">
+        <h4><span class="num">1</span>Datos del visitante</h4>
+        <div class="cols">
+          <div class="campo">
+            <label for="nombre">👤 Nombre completo</label>
+            <input type="text" id="nombre" minlength="5" autocomplete="name" required>
+            <div class="error">Ingresa tu nombre y apellido.</div>
+          </div>
+          <div class="campo">
+            <label for="procedencia">📍 Lugar de procedencia</label>
+            <select id="procedencia" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option>Quito</option><option>Latacunga</option><option>Otra ciudad del Ecuador</option><option>Otro país</option>
+            </select>
+            <div class="error">Selecciona tu procedencia.</div>
+          </div>
+          <div class="campo">
+            <label for="email">✉ Correo electrónico</label>
+            <input type="email" id="email" autocomplete="email" required>
+            <div class="error">Ingresa un correo válido.</div>
+          </div>
+          <div class="campo">
+            <label for="telefono">📞 Teléfono</label>
+            <input type="tel" id="telefono" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" autocomplete="tel" required>
+            <div class="error">Ingresa 10 dígitos sin espacios ni guiones.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <h4><span class="num">2</span>Tu experiencia</h4>
+        <div class="cols">
+          <div class="campo completo">
+            <label for="tour">🧭 Experiencia</label>
+            <select id="tour" required></select>
+            <div class="error">Elige una experiencia.</div>
+          </div>
+          <div class="campo">
+            <label for="fecha">📅 Fecha de la visita</label>
+            <input type="date" id="fecha" required>
+            <div class="error">Elige una fecha desde hoy en adelante.</div>
+          </div>
+          <div class="campo">
+            <label for="hora">⏰ Hora de inicio</label>
+            <select id="hora" required>
+              <option value="" selected disabled>Selecciona un horario</option>
+              <option>06:00</option><option>07:30</option><option>09:00</option><option>11:00</option>
+            </select>
+            <div class="error">Elige un horario.</div>
+          </div>
+          <div class="campo">
+            <label for="adultos">👥 Adultos (desde 12 años)</label>
+            <input type="number" id="adultos" min="1" max="15" value="1" required>
+            <div class="error">Mínimo 1 y máximo 15 adultos.</div>
+          </div>
+          <div class="campo">
+            <label for="ninos">😊 Niños (5 a 11 años, 50 % de descuento)</label>
+            <input type="number" id="ninos" min="0" max="10" value="0" required>
+            <div class="error">Máximo 10 niños.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <h4><span class="num">3</span>Servicios adicionales</h4>
+        <div class="cols" id="extras"></div>
+      </div>
+
+      <div class="bloque">
+        <h4><span class="num">4</span>Observaciones</h4>
+        <div class="campo">
+          <label for="notas">Alergias, movilidad reducida u otra información importante</label>
+          <textarea id="notas" rows="3" maxlength="500"></textarea>
+        </div>
+      </div>
+
+      <div class="eco"><strong>💚 Compromiso con la naturaleza.</strong> No dejes basura, respeta la fauna y la flora, permanece en las rutas autorizadas y sigue las indicaciones de los guardaparques.</div>
+
+      <div class="acepto">
+        <input type="checkbox" id="acepto" required>
+        <label for="acepto">Acepto las normas del parque y entiendo que, por la altura, debo consultar a un médico si tengo problemas cardíacos o respiratorios.</label>
+        <div class="error">Debes aceptar para continuar.</div>
+      </div>
+
+      <div class="botones">
+        <button type="reset" class="btn btn-borde">↺ Limpiar</button>
+        <button type="submit" class="btn btn-verde">Confirmar reserva ✔</button>
+      </div>
+    </form>
+
+    <aside class="resumen">
+      <header>🧾 Resumen de tu reserva</header>
+      <ul id="resumen"></ul>
+      <div class="total"><span>Total</span><span id="total">$0,00</span></div>
+    </aside>
+  </div>
+</section>
+
+<!-- CONSEJOS -->
+<section id="consejos" class="contenedor seccion">
+  <div class="centro cabecera">
+    <p class="sobre">Prepárate</p>
+    <h2 class="titulo">Consejos para tu visita</h2>
+  </div>
+  <div class="rejilla r3">
+    <div class="tarjeta"><h5>🧥 Abrígate por capas</h5><p>En el páramo la temperatura baja con rapidez y el viento es fuerte. Lleva chaqueta cortaviento, gorro y guantes.</p></div>
+    <div class="tarjeta"><h5>💧 Hidrátate y aclimátate</h5><p>Bebe agua con frecuencia, camina despacio y descansa. El mal de altura puede aparecer sobre los 3.500 m.</p></div>
+    <div class="tarjeta"><h5>☀ Protección solar</h5><p>La radiación UV es muy alta en la montaña. Usa bloqueador, lentes con filtro y sombrero.</p></div>
+  </div>
+</section>
+
+<!-- PREGUNTAS FRECUENTES -->
+<section id="preguntas" class="contenedor seccion">
+  <div class="centro cabecera">
+    <p class="sobre">Resolvemos tus dudas</p>
+    <h2 class="titulo">Preguntas frecuentes</h2>
+  </div>
+  <div class="faq">
+    <details open><summary>¿Puedo cancelar mi reserva?</summary><p>Sí. Desde la sección «Mis reservas» puedes cancelarla en cualquier momento con tu código de confirmación.</p></details>
+    <details><summary>¿A partir de qué edad pueden participar los niños?</summary><p>Desde los 5 años, siempre acompañados por un adulto. Pagan el 50 % de la tarifa.</p></details>
+    <details><summary>¿Qué pasa si el clima no permite la actividad?</summary><p>Si el parque cierra rutas por clima o actividad volcánica, reprogramamos tu visita sin costo adicional.</p></details>
+    <details><summary>¿Qué debo llevar?</summary><p>Calzado de montaña, ropa abrigada, impermeable, agua, protector solar, lentes y documento de identidad.</p></details>
+  </div>
+</section>
+
+<!-- MIS RESERVAS -->
+<section id="misreservas" class="contenedor seccion">
+  <div class="centro cabecera">
+    <p class="sobre">Historial</p>
+    <h2 class="titulo">Mis reservas</h2>
+    <p class="suave">Se guardan en este navegador.</p>
+  </div>
+  <div class="tabla-caja">
+    <table>
+      <thead><tr><th>Código</th><th>Visitante</th><th>Experiencia</th><th>Fecha</th><th class="centro">Personas</th><th class="der">Total</th><th></th></tr></thead>
+      <tbody id="tablaReservas"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="contenedor">
+    <div class="icono">⛰</div>
+    <h5>Parque Nacional Cotopaxi</h5>
+    <p>Descubre, disfruta y protege la belleza natural del Ecuador.</p>
+    <p class="pequeno">© 2026 Cotopaxi Tour · Turismo responsable</p>
+  </div>
+</footer>
+
+<!-- MODAL DE CONFIRMACIÓN -->
+<dialog id="modalOk">
+  <div class="modal-cab">✅ ¡Reserva confirmada!</div>
+  <div class="modal-cuerpo" id="modalCuerpo"></div>
+  <div class="modal-pie">
+    <button type="button" class="btn btn-borde" onclick="window.print()">🖨 Imprimir</button>
+    <button type="button" class="btn btn-verde" id="cerrarModal">Entendido</button>
+  </div>
+</dialog>
+
+<div id="aviso" role="status" aria-live="polite"></div>
+
+<script>
+// ===== CATÁLOGO (edita precios y textos aquí) =====
+const TOURS = [
+  { id:"limpiopungo", nombre:"Laguna de Limpiopungo", dur:"4 horas", nivel:"Fácil", precio:35, icono:"🌊",
+    desc:"Caminata circular de unos 2 km a 3.800 m con vistas al volcán, aves andinas y caballos salvajes." },
+  { id:"refugio", nombre:"Ascenso al Refugio José Rivas", dur:"6 horas", nivel:"Exigente", precio:55, icono:"🏔",
+    desc:"Sube hasta el refugio a 4.864 m por el arenal y siente de cerca el glaciar." },
+  { id:"ciclismo", nombre:"Ciclismo de montaña", dur:"5 horas", nivel:"Moderado", precio:45, icono:"🚴",
+    desc:"Recorrido en bicicleta por caminos de páramo con bicicleta, casco y asistencia incluidos." },
+  { id:"cabalgata", nombre:"Cabalgata por el páramo", dur:"4 horas", nivel:"Fácil", precio:40, icono:"🐎",
+    desc:"Paseo a caballo con baqueano por llanuras de pajonal y bosques de pino." },
+  { id:"foto", nombre:"Fotografía al amanecer", dur:"5 horas", nivel:"Moderado", precio:60, icono:"📷",
+    desc:"Salida de madrugada para capturar el volcán con la mejor luz, con guía fotógrafo." }
+];
+const EXTRAS = [
+  { id:"transporte", nombre:"Transporte desde Quito (ida y vuelta)", precio:15, porPersona:true, icono:"🚌" },
+  { id:"almuerzo", nombre:"Almuerzo andino", precio:10, porPersona:true, icono:"🍲" },
+  { id:"guia", nombre:"Guía bilingüe español-inglés", precio:20, porPersona:false, icono:"🗣" },
+  { id:"fotos", nombre:"Álbum de fotos profesionales", precio:12, porPersona:false, icono:"🖼" }
+];
+const CLAVE = "reservasCotopaxi";
+
+const $ = id => document.getElementById(id);
+const dinero = n => "$" + n.toFixed(2).replace(".", ",");
+const esc = s => String(s).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const form = $("formReserva");
+
+// ===== ALMACENAMIENTO =====
+function leer(){ try{ return JSON.parse(localStorage.getItem(CLAVE)) || []; }catch(e){ return []; } }
+function guardar(l){ try{ localStorage.setItem(CLAVE, JSON.stringify(l)); }catch(e){} }
+let reservas = leer();
+
+// ===== MENÚ MÓVIL =====
+$("btnMenu").addEventListener("click", () => {
+  const abierto = $("menu").classList.toggle("abierto");
+  $("btnMenu").setAttribute("aria-expanded", abierto);
+});
+$("menu").addEventListener("click", e => { if (e.target.closest("a")) $("menu").classList.remove("abierto"); });
+
+// ===== CONSTRUCCIÓN DE LA PÁGINA =====
+$("listaTours").innerHTML = TOURS.map(t => `
+  <div class="tarjeta">
+    <div class="tour-cab">
+      <span class="tour-ico">${t.icono}</span>
+      <div>
+        <h5>${t.nombre}</h5>
+        <span class="chip ${t.nivel.toLowerCase().replace("á","a")}">${t.nivel}</span>
+        <span class="chip">🕒 ${t.dur}</span>
+      </div>
+    </div>
+    <p>${t.desc}</p>
+    <div class="tour-pie">
+      <span class="precio">${dinero(t.precio)} <small>/ adulto</small></span>
+      <button type="button" class="btn btn-verde" data-tour="${t.id}">Reservar</button>
+    </div>
+  </div>`).join("");
+
+$("tour").innerHTML = '<option value="" selected disabled>Selecciona una experiencia</option>' +
+  TOURS.map(t => `<option value="${t.id}">${t.nombre} · ${dinero(t.precio)}</option>`).join("");
+
+$("extras").innerHTML = EXTRAS.map(e => `
+  <label class="extra">
+    <input class="extra-check" type="checkbox" value="${e.id}">
+    <span><b>${e.icono} ${e.nombre}</b><small class="suave">${dinero(e.precio)} ${e.porPersona ? "por persona" : "por grupo"}</small></span>
+  </label>`).join("");
+
+document.querySelectorAll("[data-tour]").forEach(b => b.addEventListener("click", () => {
+  $("tour").value = b.dataset.tour;
+  actualizar();
+  $("reservar").scrollIntoView({behavior:"smooth"});
+}));
+
+function hoyLocal(){ const h = new Date(); return new Date(h.getTime() - h.getTimezoneOffset()*60000).toISOString().split("T")[0]; }
+$("fecha").min = hoyLocal();
+
+// ===== CÁLCULO =====
+function calcular(){
+  const tour = TOURS.find(t => t.id === $("tour").value);
+  const ad = Math.max(0, parseInt($("adultos").value) || 0);
+  const ni = Math.max(0, parseInt($("ninos").value) || 0);
+  const pers = ad + ni, lineas = [];
+  let total = 0;
+  if (tour){
+    const sub = tour.precio*ad + tour.precio*0.5*ni;
+    total += sub;
+    lineas.push([tour.nombre, `${ad} adulto(s)` + (ni ? ` + ${ni} niño(s)` : ""), sub]);
+  }
+  const extras = [...document.querySelectorAll(".extra-check:checked")].map(c => EXTRAS.find(e => e.id === c.value));
+  extras.forEach(e => {
+    const sub = e.precio * (e.porPersona ? pers : 1);
+    total += sub;
+    lineas.push([e.nombre, e.porPersona ? `${pers} persona(s)` : "Grupo", sub]);
+  });
+  return {tour, ad, ni, pers, lineas, extras, total};
+}
+function actualizar(){
+  const c = calcular();
+  $("resumen").innerHTML = c.lineas.length
+    ? c.lineas.map(l => `<li><div>${l[0]}<small>${l[1]}</small></div><b>${dinero(l[2])}</b></li>`).join("")
+    : '<li class="suave">Elige una experiencia para ver el detalle.</li>';
+  $("total").textContent = dinero(c.total);
+}
+form.addEventListener("input", actualizar);
+form.addEventListener("change", actualizar);
+form.addEventListener("reset", () => { form.classList.remove("validada"); setTimeout(actualizar, 0); });
+
+// ===== AVISO =====
+let temporizador;
+function aviso(txt){
+  const a = $("aviso"); a.textContent = txt; a.classList.add("mostrar");
+  clearTimeout(temporizador);
+  temporizador = setTimeout(() => a.classList.remove("mostrar"), 3500);
+}
+
+// ===== ENVÍO =====
+function codigo(){ return "CTX-" + Date.now().toString(36).toUpperCase().slice(-5) + Math.floor(Math.random()*90+10); }
+function fechaLarga(iso){
+  const [a,m,d] = iso.split("-").map(Number);
+  return new Date(a, m-1, d).toLocaleDateString("es-EC", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
+}
+form.addEventListener("submit", ev => {
+  ev.preventDefault();
+  const c = calcular();
+  $("fecha").setCustomValidity($("fecha").value && $("fecha").value < hoyLocal() ? "Fecha pasada" : "");
+  if (!form.checkValidity() || c.ad < 1){ form.classList.add("validada"); aviso("Revisa los campos marcados en rojo."); return; }
+
+  const r = {
+    codigo: codigo(), nombre: $("nombre").value.trim(), email: $("email").value.trim(), telefono: $("telefono").value,
+    procedencia: $("procedencia").value, tour: c.tour.nombre, fecha: $("fecha").value, hora: $("hora").value,
+    adultos: c.ad, ninos: c.ni, extras: c.extras.map(e => e.nombre), notas: $("notas").value.trim(), total: c.total
+  };
+  reservas.unshift(r); guardar(reservas); pintarTabla();
+
+  $("modalCuerpo").innerHTML = `
+    <p>Gracias, <strong>${esc(r.nombre)}</strong>. Guarda tu código de confirmación:</p>
+    <p class="codigo">${r.codigo}</p>
+    <ul>
+      <li>🧭 ${esc(r.tour)}</li>
+      <li>📅 ${fechaLarga(r.fecha)} a las ${r.hora}</li>
+      <li>👥 ${r.adultos} adulto(s), ${r.ninos} niño(s)</li>
+      ${r.extras.length ? `<li>➕ ${r.extras.map(esc).join(", ")}</li>` : ""}
+      <li>💵 Total a pagar: <strong>${dinero(r.total)}</strong></li>
+    </ul>`;
+  $("modalOk").showModal();
+  form.reset();
+});
+$("cerrarModal").addEventListener("click", () => $("modalOk").close());
+
+// ===== TABLA DE RESERVAS =====
+function pintarTabla(){
+  $("contador").textContent = reservas.length;
+  $("tablaReservas").innerHTML = reservas.length ? reservas.map(r => `
+    <tr>
+      <td class="cod">${r.codigo}</td>
+      <td>${esc(r.nombre)}<br><small class="suave">${esc(r.email)}</small></td>
+      <td>${esc(r.tour)}</td>
+      <td>${r.fecha.split("-").reverse().join("/")} · ${r.hora}</td>
+      <td class="centro">${r.adultos + r.ninos}</td>
+      <td class="der"><b>${dinero(r.total)}</b></td>
+      <td class="der"><button type="button" class="btn btn-rojo" data-cancelar="${r.codigo}">🗑 Cancelar</button></td>
+    </tr>`).join("")
+    : '<tr><td colspan="7" class="centro suave" style="padding:28px">Aún no tienes reservas.</td></tr>';
+}
+$("tablaReservas").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-cancelar]");
+  if (!b || !confirm("¿Seguro que deseas cancelar la reserva " + b.dataset.cancelar + "?")) return;
+  reservas = reservas.filter(r => r.codigo !== b.dataset.cancelar);
+  guardar(reservas); pintarTabla(); aviso("Reserva cancelada correctamente.");
+});
+
+actualizar();
+pintarTabla();
+</script>
+</body>
+</html>
